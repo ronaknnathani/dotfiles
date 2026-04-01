@@ -70,6 +70,7 @@ export FZF_ALT_C_OPTS="--preview 'ls -la --color=always {} | head -50'"
 # ── Aliases ──────────────────────────────────────────────────
 alias ll="ls -la"
 alias k="kubectl"
+alias gpom='git pull --rebase origin $(git_main_branch)'
 alias watch='viddy'
 alias gdu='gdu-go'
 
