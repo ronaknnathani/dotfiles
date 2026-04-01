@@ -1,0 +1,13 @@
+theme = Catppuccin Mocha
+copy-on-select = clipboard
+font-family = "JetBrainsMonoNerdFont"
+font-size = 18
+font-style = bold
+mouse-hide-while-typing = true
+window-padding-x = 10
+window-padding-y = 10
+unfocused-split-opacity = 0.5
+macos-option-as-alt = true
+keybind = super+arrow_left=previous_tab
+keybind = super+arrow_right=next_tab
+

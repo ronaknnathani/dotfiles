@@ -1,0 +1,71 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 4,
+  "palette": {
+    "teal": "#94E2D5",
+    "pink": "#F5C2E7",
+    "lavender": "#B4BEFE",
+    "blue": "#89B4FA",
+    "green": "#A6E3A1",
+    "peach": "#FAB387",
+    "yellow": "#F9E2AF",
+    "red": "#F38BA8",
+    "muted": "#6C7086"
+  },
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "kubectl",
+          "style": "plain",
+          "foreground": "p:teal",
+          "template": "\udb84\udcfe {{ .Context }}:{{ .Namespace }}"
+        },
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "p:pink",
+          "template": " | {{ .Path }}",
+          "properties": {
+            "style": "folder",
+            "home_icon": "~"
+          }
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "p:blue",
+          "template": " | \ue725 {{ .HEAD }}",
+          "properties": {
+            "branch_icon": "",
+            "fetch_status": false
+          }
+        },
+        {
+          "type": "claude",
+          "style": "plain",
+          "foreground": "p:lavender",
+          "template": " | {{ .Model.DisplayName }}"
+        },
+        {
+          "type": "claude",
+          "style": "plain",
+          "foreground": "p:yellow",
+          "foreground_templates": [
+            "{{ if gt .TokenUsagePercent 70 }}p:peach{{ end }}",
+            "{{ if gt .TokenUsagePercent 85 }}p:red{{ end }}"
+          ],
+          "template": " | {{ .TokenUsagePercent }}%"
+        },
+        {
+          "type": "claude",
+          "style": "plain",
+          "foreground": "p:green",
+          "template": " | {{ .FormattedCost }}"
+        }
+      ]
+    }
+  ]
+}
