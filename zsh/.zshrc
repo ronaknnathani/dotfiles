@@ -35,6 +35,15 @@ zinit wait lucid for \
   light-mode trapd00r/LS_COLORS \
   light-mode Aloxaf/fzf-tab
 
+# Option+Backspace deletes subword (stops at - / $ # . _ etc), Ctrl+W deletes whole word
+WORDCHARS=''
+_kill_whole_word() {
+  local WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+  zle backward-kill-word
+}
+zle -N _kill_whole_word
+bindkey '^W' _kill_whole_word
+
 # Loaded synchronously (must hook into zle before Ghostty's shell integration)
 zinit lucid for \
   light-mode atload"zicompinit; zicdreplay" zdharma-continuum/fast-syntax-highlighting
