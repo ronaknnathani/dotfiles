@@ -17,7 +17,7 @@
         {
           "foreground": "p:teal",
           "style": "plain",
-          "template": "\udb84\udcfe ({{ .Context }}:{{ .Namespace }}) ",
+          "template": "\udb84\udcfe ({{ .Context }}:<p:lavender>{{ .Namespace }}</>) ",
           "type": "kubectl"
         },
         {
