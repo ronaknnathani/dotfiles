@@ -18,6 +18,8 @@ export EDITOR="cursor -w"
 # ── History ──────────────────────────────────────────────────
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_SPACE
+setopt BANG_HIST
+bindkey ' ' magic-space
 
 # ── Zinit ────────────────────────────────────────────────────
 source "$(brew --prefix)/opt/zinit/zinit.zsh"
