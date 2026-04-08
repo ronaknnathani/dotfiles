@@ -7,6 +7,7 @@ mouse-hide-while-typing = true
 window-padding-x = 10
 window-padding-y = 10
 unfocused-split-opacity = 0.5
+split-divider-color = #6C7086
 macos-option-as-alt = true
 keybind = super+arrow_left=previous_tab
 keybind = super+arrow_right=next_tab
