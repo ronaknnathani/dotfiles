@@ -27,6 +27,24 @@ export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 mkdir -p "$ZSH_CACHE_DIR/completions"
 fpath=("$ZSH_CACHE_DIR/completions" $fpath)
 
+# OMZ git helper functions (needed by OMZP::git aliases)
+function git_current_branch() {
+  local ref
+  ref=$(git symbolic-ref --quiet HEAD 2>/dev/null)
+  [[ $? != 0 ]] && ref=$(git rev-parse --short HEAD 2>/dev/null) || ref=${ref#refs/heads/}
+  echo "$ref"
+}
+function git_main_branch() {
+  local ref
+  for ref in main master trunk; do
+    if git show-ref -q --verify "refs/heads/$ref" 2>/dev/null; then
+      echo "$ref"
+      return
+    fi
+  done
+  echo "main"
+}
+
 # Turbo-loaded plugins (deferred — prompt renders first)
 zinit wait lucid for \
   OMZP::git \
