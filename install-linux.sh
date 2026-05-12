@@ -34,8 +34,10 @@ if ! command -v ghostty &>/dev/null; then
   echo "  See: https://ghostty.org/docs/install/linux"
 fi
 
-# JetBrainsMono Nerd Font
-if ! fc-list | grep -qi "JetBrainsMono.*Nerd"; then
+# JetBrainsMono Nerd Font (skip on headless systems without fontconfig)
+if ! command -v fc-cache &>/dev/null; then
+  echo "Skipping JetBrainsMono Nerd Font install — fontconfig not present (headless system)."
+elif ! fc-list | grep -qi "JetBrainsMono.*Nerd"; then
   echo "Installing JetBrainsMono Nerd Font..."
   mkdir -p ~/.local/share/fonts
   curl -fLo /tmp/JetBrainsMono.tar.xz \
