@@ -26,7 +26,7 @@ fi
 if [[ "$OSTYPE" == linux* ]] && [[ -o interactive ]] && [[ -n "$SSH_CONNECTION" ]]; then
   printf '\e]11;#1a1f3a\a'                          # OSC 11: dark navy background
   printf '\e]12;#ff9e3b\a'                          # OSC 12: orange cursor
-  printf '\e]2;🖧 VM: %s\a' "$(hostname -s)"        # OSC 2:  window/tab title
+  printf '\e]2; VM: %s\a' "$(hostname -s)" # OSC 2:  window/tab title (Nerd Font: nf-cod-vm)
 fi
 
 # ── History ──────────────────────────────────────────────────
