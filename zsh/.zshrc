@@ -21,9 +21,9 @@ else
   export EDITOR="vim"
 fi
 
-# ── Linux VM indicator: distinct bg, cursor, and tab title ───
+# ── SSH session indicator: distinct bg, cursor, and tab title ───
 # Helps tell SSH'd-into Linux VMs apart from local macOS terminals at a glance.
-if [[ "$OSTYPE" == linux* ]] && [[ -o interactive ]]; then
+if [[ "$OSTYPE" == linux* ]] && [[ -o interactive ]] && [[ -n "$SSH_CONNECTION" ]]; then
   printf '\e]11;#1a1f3a\a'                          # OSC 11: dark navy background
   printf '\e]12;#ff9e3b\a'                          # OSC 12: orange cursor
   printf '\e]2;🖧 VM: %s\a' "$(hostname -s)"        # OSC 2:  window/tab title
