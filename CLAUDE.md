@@ -12,6 +12,7 @@ Each top-level directory is a Stow package that symlinks into `$HOME`:
 - `oh-my-posh/` - Shell prompt theme + Claude Code status line theme
 - `atuin/` - Shell history config
 - `helix/` - Editor config
+- `tmux/` - Minimal tmux config for mouse support over SSH (no plugins)
 - `yazi/` - Terminal file manager config (Catppuccin Mocha theme)
 
 ## Key decisions
