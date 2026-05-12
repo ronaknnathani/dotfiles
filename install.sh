@@ -20,6 +20,12 @@ fi
 echo "Installing packages..."
 brew bundle --file="$DOTFILES_DIR/Brewfile"
 
+# stow is required below; reinstall if brew bundle left it missing for any reason
+if ! command -v stow &>/dev/null; then
+  echo "stow not on PATH — installing explicitly..."
+  brew install stow
+fi
+
 # Backup conflicting files
 echo "Backing up existing configs to $BACKUP_DIR..."
 mkdir -p "$BACKUP_DIR"

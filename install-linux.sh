@@ -21,6 +21,12 @@ echo "Installing packages..."
 # Install formulae (casks not supported on Linux)
 brew install zinit oh-my-posh fzf fd bat ripgrep zoxide atuin viddy helix yazi diff-so-fancy git-delta stow direnv
 
+# stow is required below; reinstall if the above left it missing for any reason
+if ! command -v stow &>/dev/null; then
+  echo "stow not on PATH — installing explicitly..."
+  brew install stow
+fi
+
 # Ghostty (build from source or install via package manager)
 if ! command -v ghostty &>/dev/null; then
   echo ""
