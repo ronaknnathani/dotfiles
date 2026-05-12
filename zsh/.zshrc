@@ -13,7 +13,21 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # ── Environment ──────────────────────────────────────────────
-export EDITOR="cursor -w"
+if command -v cursor &>/dev/null; then
+  export EDITOR="cursor -w"
+elif command -v hx &>/dev/null; then
+  export EDITOR="hx"
+else
+  export EDITOR="vim"
+fi
+
+# ── SSH session indicator: distinct bg, cursor, and tab title ───
+# Helps tell SSH'd-into Linux VMs apart from local macOS terminals at a glance.
+if [[ "$OSTYPE" == linux* ]] && [[ -o interactive ]] && [[ -n "$SSH_CONNECTION" ]]; then
+  printf '\e]11;#1a1f3a\a'                          # OSC 11: dark navy background
+  printf '\e]12;#ff9e3b\a'                          # OSC 12: orange cursor
+  printf '\e]2;🖥 VM: %s\a' "$(hostname -s)"        # OSC 2:  window/tab title
+fi
 
 # ── History ──────────────────────────────────────────────────
 setopt SHARE_HISTORY
@@ -91,7 +105,7 @@ export FZF_DEFAULT_OPTS=" \
   --prompt='  ' --pointer='▎' --marker='✓ ' \
   --preview-window='right:50%:border-left' \
   --bind='ctrl-d:half-page-down,ctrl-u:half-page-up' \
-  --bind='ctrl-y:execute-silent(echo -n {+} | pbcopy)+abort' \
+  --bind='ctrl-y:execute-silent(echo -n {+} | clip)+abort' \
 "
 export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :300 {} 2>/dev/null || cat {}'"
 export FZF_ALT_C_OPTS="--preview 'ls -la --color=always {} | head -50'"
