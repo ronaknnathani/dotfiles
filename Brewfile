@@ -13,6 +13,7 @@ brew "diff-so-fancy"
 brew "git-delta"
 brew "stow"
 brew "direnv"
+brew "tmux"
 
 cask "ghostty"
 cask "font-jetbrains-mono-nerd-font"

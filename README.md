@@ -94,6 +94,16 @@ The shell is configured with [zinit](https://github.com/zdharma-continuum/zinit)
 - Inline diagnostics (warnings on cursor line, hints at end of line)
 - YAML language server with Kubernetes schema validation
 
+### Terminal multiplexer (tmux)
+
+Minimal [tmux](https://github.com/tmux/tmux) config focused on making the mouse work — especially when running Claude Code on a remote VM over SSH. Five settings total, no plugins, default `Ctrl-b` prefix.
+
+- `mouse on` — click to focus a pane, wheel to scroll, drag borders to resize, drag to select text
+- `set-clipboard on` — drag-selected text lands in the **local** clipboard via OSC 52 (Ghostty forwards the escape sequence)
+- `MouseDragEnd1Pane` rebound so the selection stays visible on release
+- `history-limit 50000` — enough scrollback for Claude's verbose output
+- `prefix r` reloads the config
+
 ### File manager (Yazi)
 
 [Yazi](https://github.com/sxyazi/yazi) configured with:
@@ -131,6 +141,7 @@ dotfiles/
 ├── atuin/.config/atuin/config.toml
 ├── helix/.config/helix/config.toml
 ├── helix/.config/helix/languages.toml
+├── tmux/.tmux.conf
 ├── yazi/.config/yazi/yazi.toml
 └── yazi/.config/yazi/theme.toml
 ```
