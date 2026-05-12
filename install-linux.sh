@@ -8,7 +8,7 @@ fi
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
-STOW_PACKAGES=(zsh git ghostty oh-my-posh atuin helix)
+STOW_PACKAGES=(zsh git ghostty oh-my-posh atuin helix yazi)
 
 # Homebrew (Linuxbrew)
 if ! command -v brew &>/dev/null; then
@@ -19,7 +19,7 @@ fi
 
 echo "Installing packages..."
 # Install formulae (casks not supported on Linux)
-brew install zinit oh-my-posh fzf fd bat ripgrep zoxide atuin viddy helix diff-so-fancy git-delta stow direnv
+brew install zinit oh-my-posh fzf fd bat ripgrep zoxide atuin viddy helix yazi diff-so-fancy git-delta stow direnv
 
 # Ghostty (build from source or install via package manager)
 if ! command -v ghostty &>/dev/null; then

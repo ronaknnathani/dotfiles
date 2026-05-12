@@ -94,6 +94,16 @@ The shell is configured with [zinit](https://github.com/zdharma-continuum/zinit)
 - Inline diagnostics (warnings on cursor line, hints at end of line)
 - YAML language server with Kubernetes schema validation
 
+### File manager (Yazi)
+
+[Yazi](https://github.com/sxyazi/yazi) configured with:
+- Theme: Catppuccin Mocha
+- Three-pane layout (parent / current / preview) at 1:4:3 ratio
+- Natural sort with directories first
+- `open`-based macOS file/Finder integration, `xdg-open` on Linux
+- `EDITOR` used for text editing actions
+- `y` shell function: launch yazi and cd into the last visited directory on exit
+
 ### Git
 
 - [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) as the pager for readable diffs
@@ -120,7 +130,9 @@ dotfiles/
 ├── oh-my-posh/.config/oh-my-posh/theme.omp.json
 ├── atuin/.config/atuin/config.toml
 ├── helix/.config/helix/config.toml
-└── helix/.config/helix/languages.toml
+├── helix/.config/helix/languages.toml
+├── yazi/.config/yazi/yazi.toml
+└── yazi/.config/yazi/theme.toml
 ```
 
 ## Machine-specific config
@@ -137,5 +149,6 @@ The `.zshrc` sources `~/.zshrc.local` at the end if it exists. Use this for work
 | `Ctrl-Y` | Copy fzf selection to clipboard |
 | `z <partial>` | Jump to frequent directory (zoxide) |
 | `zi` | Interactive directory picker (zoxide) |
+| `y` | Open yazi file manager (cd's to last dir on exit) |
 | `Cmd+Left/Right` | Switch Ghostty tabs |
 | `Cmd+Shift+,` | Reload Ghostty config |

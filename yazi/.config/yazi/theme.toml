@@ -1,0 +1,109 @@
+# Catppuccin Mocha — palette
+# rosewater #f5e0dc  flamingo #f2cdcd  pink #f5c2e7  mauve #cba6f7
+# red #f38ba8  maroon #eba0ac  peach #fab387  yellow #f9e2af
+# green #a6e3a1  teal #94e2d5  sky #89dceb  sapphire #74c7ec
+# blue #89b4fa  lavender #b4befe  text #cdd6f4  subtext1 #bac2de
+# subtext0 #a6adc8  overlay2 #9399b2  overlay1 #7f849c  overlay0 #6c7086
+# surface2 #585b70  surface1 #45475a  surface0 #313244
+# base #1e1e2e  mantle #181825  crust #11111b
+
+[mgr]
+cwd = { fg = "#89b4fa" }
+
+hovered         = { fg = "#1e1e2e", bg = "#89b4fa" }
+preview_hovered = { underline = true }
+
+find_keyword  = { fg = "#f9e2af", italic = true }
+find_position = { fg = "#f5c2e7", bg = "reset", italic = true }
+
+marker_copied   = { fg = "#a6e3a1", bg = "#a6e3a1" }
+marker_cut      = { fg = "#f38ba8", bg = "#f38ba8" }
+marker_marked   = { fg = "#94e2d5", bg = "#94e2d5" }
+marker_selected = { fg = "#f9e2af", bg = "#f9e2af" }
+
+tab_active   = { fg = "#1e1e2e", bg = "#cba6f7" }
+tab_inactive = { fg = "#cdd6f4", bg = "#45475a" }
+tab_width    = 1
+
+count_copied   = { fg = "#1e1e2e", bg = "#a6e3a1" }
+count_cut      = { fg = "#1e1e2e", bg = "#f38ba8" }
+count_selected = { fg = "#1e1e2e", bg = "#f9e2af" }
+
+border_symbol = "│"
+border_style  = { fg = "#7f849c" }
+
+syntect_theme = ""
+
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { fg = "#45475a", bg = "#45475a" }
+
+mode_normal = { fg = "#1e1e2e", bg = "#cba6f7", bold = true }
+mode_select = { fg = "#1e1e2e", bg = "#a6e3a1", bold = true }
+mode_unset  = { fg = "#1e1e2e", bg = "#f5c2e7", bold = true }
+
+progress_label  = { fg = "#cdd6f4", bold = true }
+progress_normal = { fg = "#89b4fa", bg = "#45475a" }
+progress_error  = { fg = "#f38ba8", bg = "#45475a" }
+
+permissions_t = { fg = "#89b4fa" }
+permissions_r = { fg = "#f9e2af" }
+permissions_w = { fg = "#f38ba8" }
+permissions_x = { fg = "#a6e3a1" }
+permissions_s = { fg = "#7f849c" }
+
+[input]
+border   = { fg = "#cba6f7" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+[confirm]
+border  = { fg = "#cba6f7" }
+title   = { fg = "#cba6f7" }
+content = {}
+list    = {}
+btn_yes = { reversed = true }
+btn_no  = {}
+
+[pick]
+border   = { fg = "#cba6f7" }
+active   = { fg = "#f5c2e7" }
+inactive = {}
+
+[tasks]
+border  = { fg = "#cba6f7" }
+title   = {}
+hovered = { fg = "#89b4fa", underline = true }
+
+[which]
+mask            = { bg = "#313244" }
+cand            = { fg = "#94e2d5" }
+rest            = { fg = "#9399b2" }
+desc            = { fg = "#f5c2e7" }
+separator       = "  "
+separator_style = { fg = "#585b70" }
+
+[help]
+on      = { fg = "#f5c2e7" }
+run     = { fg = "#94e2d5" }
+desc    = { fg = "#9399b2" }
+hovered = { bg = "#585b70", bold = true }
+footer  = { fg = "#45475a", bg = "#cdd6f4" }
+
+[filetype]
+rules = [
+  { mime = "image/*",                     fg = "#f5c2e7" },
+  { mime = "video/*",                     fg = "#f9e2af" },
+  { mime = "audio/*",                     fg = "#f9e2af" },
+  { mime = "application/zip",             fg = "#f38ba8" },
+  { mime = "application/gzip",            fg = "#f38ba8" },
+  { mime = "application/x-tar",           fg = "#f38ba8" },
+  { mime = "application/x-bzip",          fg = "#f38ba8" },
+  { mime = "application/x-bzip2",         fg = "#f38ba8" },
+  { mime = "application/x-7z-compressed", fg = "#f38ba8" },
+  { mime = "application/x-rar",           fg = "#f38ba8" },
+  { url = "*",  fg = "#cdd6f4" },
+  { url = "*/", fg = "#89b4fa" },
+]
