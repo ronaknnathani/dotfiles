@@ -14,6 +14,7 @@ Each top-level directory is a Stow package that symlinks into `$HOME`:
 - `helix/` - Editor config
 - `tmux/` - Minimal tmux config for mouse support over SSH (no plugins)
 - `yazi/` - Terminal file manager config (Catppuccin Mocha theme)
+- `claude/` - Claude Code personal guidelines (`~/.claude/CLAUDE.md`)
 
 ## Key decisions
 
