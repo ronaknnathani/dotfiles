@@ -8,7 +8,7 @@ fi
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
-STOW_PACKAGES=(zsh git ghostty oh-my-posh atuin helix yazi tmux)
+STOW_PACKAGES=(zsh git ghostty oh-my-posh atuin helix yazi tmux claude)
 
 # Homebrew
 if ! command -v brew &>/dev/null; then
