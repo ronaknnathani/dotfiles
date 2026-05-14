@@ -114,6 +114,10 @@ Minimal [tmux](https://github.com/tmux/tmux) config focused on making the mouse 
 - `EDITOR` used for text editing actions
 - `y` shell function: launch yazi and cd into the last visited directory on exit
 
+### Claude Code (`~/.claude/CLAUDE.md`)
+
+Personal guidelines for [Claude Code](https://claude.com/claude-code): how to think about tasks, when to ask vs. assume, simplicity and surgical-change rules, PR style, and worktree conventions. Read by Claude Code at the start of every session. Machine- or work-specific instructions stay outside this repo (e.g., `~/.claude/rules/`).
+
 ### Git
 
 - [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) as the pager for readable diffs
@@ -143,7 +147,8 @@ dotfiles/
 ├── helix/.config/helix/languages.toml
 ├── tmux/.tmux.conf
 ├── yazi/.config/yazi/yazi.toml
-└── yazi/.config/yazi/theme.toml
+├── yazi/.config/yazi/theme.toml
+└── claude/.claude/CLAUDE.md
 ```
 
 ## Machine-specific config
