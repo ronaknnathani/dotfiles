@@ -16,4 +16,5 @@ brew "direnv"
 brew "tmux"
 
 cask "ghostty"
+cask "rectangle"
 cask "font-jetbrains-mono-nerd-font"
