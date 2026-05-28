@@ -14,6 +14,7 @@ brew "git-delta"
 brew "stow"
 brew "direnv"
 brew "tmux"
+brew "jq"
 
 cask "ghostty"
 cask "rectangle"
