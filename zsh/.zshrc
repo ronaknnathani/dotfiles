@@ -23,10 +23,27 @@ fi
 
 # ── SSH session indicator: distinct bg, cursor, and tab title ───
 # Helps tell SSH'd-into Linux VMs apart from local macOS terminals at a glance.
-if [[ "$OSTYPE" == linux* ]] && [[ -o interactive ]] && [[ -n "$SSH_CONNECTION" ]]; then
+# Only the outer (non-tmux) shell touches the terminal: inside tmux each pane
+# spawns a fresh interactive shell, and re-emitting these escapes per pane
+# corrupts the display. Inside tmux the tab title is handled by set-titles in
+# ~/.tmux.conf instead.
+if [[ "$OSTYPE" == linux* ]] && [[ -o interactive ]] && [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]]; then
   printf '\e]11;#1a1f3a\a'                          # OSC 11: dark navy background
   printf '\e]12;#ff9e3b\a'                          # OSC 12: orange cursor
   printf '\e]2;🖥 VM: %s\a' "$(hostname -s)"        # OSC 2:  window/tab title
+
+  # Restore the terminal when the SSH shell exits, so the local macOS terminal
+  # isn't left with the navy background, orange cursor, an invisible cursor, or
+  # a shifted charset (the "random characters / no cursor" garbling on logout).
+  _ssh_term_restore() {
+    printf '\e]111;\a'   # OSC 111: reset background to default
+    printf '\e]112;\a'   # OSC 112: reset cursor color to default
+    printf '\e[0m'       # reset text attributes (SGR)
+    printf '\e(B'        # restore ASCII charset (fixes garbled characters)
+    printf '\e[?25h'     # ensure the cursor is visible
+  }
+  autoload -Uz add-zsh-hook
+  add-zsh-hook zshexit _ssh_term_restore
 fi
 
 # ── History ──────────────────────────────────────────────────
@@ -116,6 +133,9 @@ alias k="kubectl"
 alias gpom='git pull --rebase origin $(git_main_branch)'
 alias watch='viddy'
 alias gdu='gdu-go'
+# Recover a terminal left in a bad state (e.g. after an SSH session that didn't
+# reset colors/cursor/charset): restore line discipline + full reset (RIS).
+alias fixterm='stty sane; printf "\033c"'
 
 # ── Functions ────────────────────────────────────────────────
 function digall {
