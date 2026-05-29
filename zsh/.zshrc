@@ -28,9 +28,17 @@ fi
 # corrupts the display. Inside tmux the tab title is handled by set-titles in
 # ~/.tmux.conf instead.
 if [[ "$OSTYPE" == linux* ]] && [[ -o interactive ]] && [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]]; then
+  autoload -Uz add-zsh-hook
   printf '\e]11;#1a1f3a\a'                          # OSC 11: dark navy background
-  printf '\e]12;#ff9e3b\a'                          # OSC 12: orange cursor
   printf '\e]2;🖥 VM: %s\a' "$(hostname -s)"        # OSC 2:  window/tab title
+
+  # Re-assert the orange cursor on every prompt. tmux resets the cursor color
+  # when you attach/detach, so a one-time OSC 12 at startup doesn't survive
+  # returning to this outer shell. (Inside tmux, cursor-colour in ~/.tmux.conf
+  # keeps it orange.)
+  _ssh_cursor() { printf '\e]12;#ff9e3b\a'; }       # OSC 12: orange cursor
+  _ssh_cursor
+  add-zsh-hook precmd _ssh_cursor
 
   # Restore the terminal when the SSH shell exits, so the local macOS terminal
   # isn't left with the navy background, orange cursor, an invisible cursor, or
@@ -42,7 +50,6 @@ if [[ "$OSTYPE" == linux* ]] && [[ -o interactive ]] && [[ -n "$SSH_CONNECTION" 
     printf '\e(B'        # restore ASCII charset (fixes garbled characters)
     printf '\e[?25h'     # ensure the cursor is visible
   }
-  autoload -Uz add-zsh-hook
   add-zsh-hook zshexit _ssh_term_restore
 fi
 
