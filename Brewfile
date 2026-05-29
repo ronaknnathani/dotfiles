@@ -16,6 +16,7 @@ brew "direnv"
 brew "tmux"
 brew "jq"
 brew "copilot-cli"
+brew "gh"
 
 cask "ghostty"
 cask "rectangle"

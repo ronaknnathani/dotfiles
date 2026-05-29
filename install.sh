@@ -26,6 +26,12 @@ if ! command -v stow &>/dev/null; then
   brew install stow
 fi
 
+# gh-dash extension (skip if already installed)
+if command -v gh &>/dev/null && ! gh extension list 2>/dev/null | grep -q "dlvhdr/gh-dash"; then
+  echo "Installing gh-dash extension..."
+  gh extension install dlvhdr/gh-dash
+fi
+
 # Backup conflicting files
 echo "Backing up existing configs to $BACKUP_DIR..."
 mkdir -p "$BACKUP_DIR"

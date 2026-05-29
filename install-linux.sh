@@ -19,12 +19,18 @@ fi
 
 echo "Installing packages..."
 # Install formulae (casks not supported on Linux)
-brew install zinit oh-my-posh fzf fd bat ripgrep zoxide atuin viddy helix yazi diff-so-fancy git-delta stow direnv tmux jq copilot-cli
+brew install zinit oh-my-posh fzf fd bat ripgrep zoxide atuin viddy helix yazi diff-so-fancy git-delta stow direnv tmux jq copilot-cli gh
 
 # stow is required below; reinstall if the above left it missing for any reason
 if ! command -v stow &>/dev/null; then
   echo "stow not on PATH — installing explicitly..."
   brew install stow
+fi
+
+# gh-dash extension (skip if already installed)
+if command -v gh &>/dev/null && ! gh extension list 2>/dev/null | grep -q "dlvhdr/gh-dash"; then
+  echo "Installing gh-dash extension..."
+  gh extension install dlvhdr/gh-dash
 fi
 
 # Ghostty (build from source or install via package manager)
