@@ -15,6 +15,7 @@ brew "stow"
 brew "direnv"
 brew "tmux"
 brew "jq"
+brew "copilot-cli"
 
 cask "ghostty"
 cask "rectangle"
