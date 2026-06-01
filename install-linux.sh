@@ -19,7 +19,7 @@ fi
 
 echo "Installing packages..."
 # Install formulae (casks not supported on Linux)
-brew install zinit oh-my-posh fzf fd bat ripgrep zoxide atuin viddy helix yazi diff-so-fancy git-delta stow direnv tmux jq copilot-cli gh
+brew install zinit oh-my-posh fzf fd bat ripgrep zoxide atuin viddy helix yazi diff-so-fancy git-delta stow direnv tmux jq copilot-cli gh kubectx
 
 # stow is required below; reinstall if the above left it missing for any reason
 if ! command -v stow &>/dev/null; then
@@ -31,6 +31,40 @@ fi
 if command -v gh &>/dev/null && ! gh extension list 2>/dev/null | grep -q "dlvhdr/gh-dash"; then
   echo "Installing gh-dash extension..."
   gh extension install dlvhdr/gh-dash
+fi
+
+# krew (kubectl plugin manager) — bootstrap with the official installer
+if [[ ! -x "$HOME/.krew/bin/kubectl-krew" ]]; then
+  echo "Installing krew..."
+  (
+    cd "$(mktemp -d)" &&
+    OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+    KREW="krew-${OS}_${ARCH}" &&
+    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+    tar zxf "${KREW}.tar.gz" &&
+    ./"${KREW}" install krew
+  )
+fi
+
+# kubectl plugins via krew
+export PATH="$HOME/.krew/bin:$PATH"
+if command -v kubectl-krew &>/dev/null; then
+  echo "Updating krew plugin index..."
+  kubectl krew update >/dev/null 2>&1 || true
+  echo "Installing kubectl plugins via krew..."
+  KREW_PLUGINS=(
+    blame cond get-all images klock mc neat
+    node-resource pods-on resource-capacity status stern tail tree
+    view-allocations whoami
+  )
+  installed_plugins=$(kubectl krew list 2>/dev/null || true)
+  for plugin in "${KREW_PLUGINS[@]}"; do
+    if echo "$installed_plugins" | grep -qx "$plugin"; then
+      continue
+    fi
+    kubectl krew install "$plugin" || echo "  warn: failed to install $plugin"
+  done
 fi
 
 # Ghostty (build from source or install via package manager)

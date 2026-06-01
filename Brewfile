@@ -17,6 +17,7 @@ brew "tmux"
 brew "jq"
 brew "copilot-cli"
 brew "gh"
+brew "kubectx"
 
 cask "ghostty"
 cask "rectangle"
