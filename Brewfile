@@ -27,6 +27,8 @@ if OS.mac?
 end
 
 if OS.linux?
+  # Linux distros default to bash; install zsh so we can chsh to it
+  brew "zsh"
   # On macOS, these ship as casks; on Linux they're formulae
   brew "claude-code"
   brew "copilot-cli"
