@@ -15,7 +15,7 @@ brew "stow"
 brew "direnv"
 brew "tmux"
 brew "jq"
-brew "copilot-cli"
+brew "copilot"
 brew "gh"
 brew "kubectx"
 
