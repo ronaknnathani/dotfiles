@@ -122,7 +122,9 @@ fi
 # Linux-only extras
 if [[ "$OS" == "Linux" ]]; then
   # Claude Code — no Linux formula, use the official installer
-  if ! command -v claude &>/dev/null; then
+  if command -v claude &>/dev/null; then
+    echo "Claude Code already installed"
+  else
     echo "Installing Claude Code..."
     curl -fsSL https://claude.ai/install.sh | bash
   fi
