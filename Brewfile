@@ -25,3 +25,8 @@ if OS.mac?
   cask "rectangle"
   cask "font-jetbrains-mono-nerd-font"
 end
+
+if OS.linux?
+  # node provides npm, which is needed to install Copilot CLI on Linux
+  brew "node"
+end

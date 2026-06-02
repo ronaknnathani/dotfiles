@@ -121,6 +121,22 @@ fi
 
 # Linux-only extras
 if [[ "$OS" == "Linux" ]]; then
+  # Claude Code — no cask on Linux, use the official installer
+  if ! command -v claude &>/dev/null; then
+    echo "Installing Claude Code..."
+    curl -fsSL https://claude.ai/install.sh | bash
+  fi
+
+  # Copilot CLI — no cask on Linux, install via npm
+  if ! command -v copilot &>/dev/null; then
+    if command -v npm &>/dev/null; then
+      echo "Installing Copilot CLI via npm..."
+      npm install -g @github/copilot
+    else
+      echo "  warn: npm not available; skipping Copilot CLI"
+    fi
+  fi
+
   if ! command -v ghostty &>/dev/null; then
     echo ""
     echo "NOTE: Ghostty must be installed separately on Linux."
