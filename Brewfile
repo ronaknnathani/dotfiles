@@ -15,11 +15,11 @@ brew "stow"
 brew "direnv"
 brew "tmux"
 brew "jq"
-brew "copilot"
 brew "gh"
 brew "kubectx"
 
 if OS.mac?
+  cask "copilot-cli"
   cask "ghostty"
   cask "rectangle"
   cask "font-jetbrains-mono-nerd-font"
