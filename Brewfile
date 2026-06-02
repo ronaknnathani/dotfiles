@@ -19,6 +19,7 @@ brew "gh"
 brew "kubectx"
 
 if OS.mac?
+  cask "claude-code"
   cask "copilot-cli"
   cask "ghostty"
   cask "rectangle"
