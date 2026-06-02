@@ -71,6 +71,54 @@ if command -v kubectl-krew &>/dev/null; then
   done
 fi
 
+# Go — install latest stable from go.dev (override any brew/system go via PATH)
+install_go() {
+  local version="$1" goos goarch
+  case "$OS" in
+    Darwin) goos="darwin" ;;
+    Linux)  goos="linux" ;;
+  esac
+  case "$(uname -m)" in
+    arm64|aarch64) goarch="arm64" ;;
+    x86_64)        goarch="amd64" ;;
+    *) echo "  unsupported arch: $(uname -m)"; return 1 ;;
+  esac
+  local tarball="${version}.${goos}-${goarch}.tar.gz"
+  echo "  Downloading https://go.dev/dl/${tarball}..."
+  local tmpdir
+  tmpdir=$(mktemp -d)
+  curl -fsSL -o "${tmpdir}/${tarball}" "https://go.dev/dl/${tarball}"
+  rm -rf "$HOME/.local/go"
+  mkdir -p "$HOME/.local"
+  tar -xzf "${tmpdir}/${tarball}" -C "$HOME/.local"
+  rm -rf "$tmpdir"
+  export PATH="$HOME/.local/go/bin:$PATH"
+  echo "  Go ${version} installed to $HOME/.local/go"
+}
+
+echo "Checking Go..."
+export PATH="$HOME/.local/go/bin:$PATH"
+GO_LATEST=$(curl -fsSL "https://go.dev/dl/?mode=json" 2>/dev/null \
+  | jq -r '[.[] | select(.stable == true)][0].version' 2>/dev/null || true)
+if [[ -z "$GO_LATEST" || "$GO_LATEST" == "null" ]]; then
+  echo "  warn: could not determine latest Go version; skipping"
+elif command -v go &>/dev/null; then
+  GO_CURRENT=$(go version | awk '{print $3}')
+  if [[ "$GO_CURRENT" == "$GO_LATEST" ]]; then
+    echo "  $GO_CURRENT already installed (latest)"
+  else
+    echo "  $GO_CURRENT installed; latest is $GO_LATEST"
+    read -p "  Upgrade? [y/N] " -n 1 -r REPLY || REPLY=""
+    echo
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+      install_go "$GO_LATEST"
+    fi
+  fi
+else
+  echo "  Go not installed; installing $GO_LATEST..."
+  install_go "$GO_LATEST"
+fi
+
 # Linux-only extras
 if [[ "$OS" == "Linux" ]]; then
   if ! command -v ghostty &>/dev/null; then

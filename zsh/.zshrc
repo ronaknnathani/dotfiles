@@ -5,6 +5,7 @@ elif [[ -d /home/linuxbrew/.linuxbrew ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 export GOPATH="$HOME/code/go"
+export PATH="$HOME/.local/go/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export VOLTA_HOME="$HOME/.volta"
