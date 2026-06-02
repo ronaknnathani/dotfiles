@@ -9,7 +9,7 @@ esac
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
-STOW_PACKAGES=(zsh git ghostty oh-my-posh atuin helix yazi tmux claude)
+STOW_PACKAGES=(zsh bash git ghostty oh-my-posh atuin helix yazi tmux claude)
 
 # Homebrew
 if ! command -v brew &>/dev/null; then
@@ -170,25 +170,6 @@ if command -v atuin &>/dev/null; then
   atuin import zsh 2>/dev/null || true
 fi
 
-# Offer to switch default shell to zsh (Linux distros usually default to bash;
-# without zsh as the login shell, ~/.zshrc never gets sourced)
-if command -v zsh &>/dev/null && [[ "${SHELL:-}" != *zsh* ]]; then
-  ZSH_PATH="$(command -v zsh)"
-  echo ""
-  echo "Default shell is ${SHELL:-unknown}; zsh is available at $ZSH_PATH."
-  read -p "Change default shell to zsh? [y/N] " -n 1 -r REPLY || REPLY=""
-  echo
-  if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-    # chsh refuses shells not listed in /etc/shells (Linuxbrew's zsh isn't there
-    # by default) — add it once, then chsh
-    if ! grep -qx "$ZSH_PATH" /etc/shells 2>/dev/null; then
-      echo "  Adding $ZSH_PATH to /etc/shells (requires sudo)..."
-      echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
-    fi
-    chsh -s "$ZSH_PATH"
-    echo "  Default shell changed. Log out and back in for it to take effect."
-  fi
-fi
 
 echo ""
 echo "Done! Open a new terminal tab to see the changes."

@@ -131,6 +131,8 @@ dotfiles/
 ├── install.sh              # macOS + Linux installer (auto-detects OS)
 ├── Brewfile                # Homebrew dependencies (casks guarded by OS.mac?)
 ├── zsh/.zshrc              # Shell config (zinit, plugins, fzf, aliases)
+├── bash/.bashrc            # Minimal — execs into zsh on Linux (LDAP-friendly chsh workaround)
+├── bash/.bash_profile
 ├── git/.gitconfig          # Git user config, diff-so-fancy, delta
 ├── git/.config/git/ignore  # Global gitignore
 ├── ghostty/.config/ghostty/config

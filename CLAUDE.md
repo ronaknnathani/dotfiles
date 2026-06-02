@@ -7,6 +7,7 @@ Personal dotfiles managed with GNU Stow. Catppuccin Mocha theme throughout.
 Each top-level directory is a Stow package that symlinks into `$HOME`:
 
 - `zsh/` - Shell config (zinit, plugins, fzf, aliases)
+- `bash/` - Minimal `.bashrc`/`.bash_profile` that exec into zsh on Linux (login-shell workaround for LDAP/NSS-managed accounts where `chsh` fails)
 - `git/` - Git config (diff-so-fancy, delta, global gitignore)
 - `ghostty/` - Ghostty terminal config
 - `oh-my-posh/` - Shell prompt theme + Claude Code status line theme
