@@ -28,7 +28,7 @@ Each top-level directory is a Stow package that symlinks into `$HOME`:
 
 - Commits to this repo should use the noreply email: `7279934+ronaknnathani@users.noreply.github.com`
 - The `.gitconfig` in the repo has a placeholder email -- users update it after install.
-- Two install scripts: `install.sh` (macOS), `install-linux.sh` (Linux). Both use Homebrew.
+- Single `install.sh` works on macOS and Linux: it `uname`-checks to branch where needed (brew shellenv path, Linux-only Ghostty/font extras, post-install message). Casks in the Brewfile are wrapped in `if OS.mac?` so the same Brewfile loads on both platforms.
 - The portable `.zshrc` uses `$(brew --prefix)` for zinit path to support both macOS and Linux brew locations.
 
 ## Files not in this repo

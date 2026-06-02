@@ -4,21 +4,15 @@ Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/). U
 
 ## Install
 
-**macOS:**
+Works on macOS and Linux — the script auto-detects the OS:
+
 ```bash
 git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/code/dotfiles
 cd ~/code/dotfiles
 ./install.sh
 ```
 
-**Linux:**
-```bash
-git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/code/dotfiles
-cd ~/code/dotfiles
-./install-linux.sh
-```
-
-Both scripts install Homebrew (if missing), all dependencies, back up any conflicting configs to `~/dotfiles_backup/`, and symlink everything via Stow. Zinit auto-downloads all zsh plugins on first shell startup.
+It installs Homebrew (if missing), all dependencies from the `Brewfile` (casks are skipped on Linux), backs up any conflicting configs to `~/dotfiles_backup/`, and symlinks everything via Stow. Zinit auto-downloads all zsh plugins on first shell startup.
 
 ## Post-install
 
@@ -134,9 +128,8 @@ Personal guidelines for [Claude Code](https://claude.com/claude-code): how to th
 
 ```
 dotfiles/
-├── install.sh              # macOS installer
-├── install-linux.sh        # Linux installer
-├── Brewfile                # Homebrew dependencies
+├── install.sh              # macOS + Linux installer (auto-detects OS)
+├── Brewfile                # Homebrew dependencies (casks guarded by OS.mac?)
 ├── zsh/.zshrc              # Shell config (zinit, plugins, fzf, aliases)
 ├── git/.gitconfig          # Git user config, diff-so-fancy, delta
 ├── git/.config/git/ignore  # Global gitignore

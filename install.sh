@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
 
-if [[ "$(uname)" != "Darwin" ]]; then
-  echo "This script is for macOS. Use install-linux.sh for Linux."
-  exit 1
-fi
+OS="$(uname)"
+case "$OS" in
+  Darwin|Linux) ;;
+  *) echo "Unsupported OS: $OS"; exit 1 ;;
+esac
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
@@ -14,7 +15,11 @@ STOW_PACKAGES=(zsh git ghostty oh-my-posh atuin helix yazi tmux claude)
 if ! command -v brew &>/dev/null; then
   echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  if [[ "$OS" == "Darwin" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  else
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
 fi
 
 echo "Installing packages..."
@@ -37,9 +42,9 @@ if [[ ! -x "$HOME/.krew/bin/kubectl-krew" ]]; then
   echo "Installing krew..."
   (
     cd "$(mktemp -d)" &&
-    OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+    KOS="$(uname | tr '[:upper:]' '[:lower:]')" &&
     ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
-    KREW="krew-${OS}_${ARCH}" &&
+    KREW="krew-${KOS}_${ARCH}" &&
     curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
     tar zxf "${KREW}.tar.gz" &&
     ./"${KREW}" install krew
@@ -64,6 +69,28 @@ if command -v kubectl-krew &>/dev/null; then
     fi
     kubectl krew install "$plugin" || echo "  warn: failed to install $plugin"
   done
+fi
+
+# Linux-only extras
+if [[ "$OS" == "Linux" ]]; then
+  if ! command -v ghostty &>/dev/null; then
+    echo ""
+    echo "NOTE: Ghostty must be installed separately on Linux."
+    echo "  See: https://ghostty.org/docs/install/linux"
+  fi
+
+  # JetBrainsMono Nerd Font (skip on headless systems without fontconfig)
+  if ! command -v fc-cache &>/dev/null; then
+    echo "Skipping JetBrainsMono Nerd Font install — fontconfig not present (headless system)."
+  elif ! fc-list | grep -qi "JetBrainsMono.*Nerd"; then
+    echo "Installing JetBrainsMono Nerd Font..."
+    mkdir -p ~/.local/share/fonts
+    curl -fLo /tmp/JetBrainsMono.tar.xz \
+      "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
+    tar -xf /tmp/JetBrainsMono.tar.xz -C ~/.local/share/fonts/
+    fc-cache -fv ~/.local/share/fonts/ >/dev/null 2>&1
+    rm /tmp/JetBrainsMono.tar.xz
+  fi
 fi
 
 # Backup conflicting files
@@ -101,5 +128,9 @@ echo ""
 echo "Post-install:"
 echo "  1. Create ~/.gitconfig.local with your email and any per-machine git config"
 echo "     (the tracked ~/.gitconfig already [include]s it)"
-echo "  2. Reload Ghostty: Cmd+Shift+,"
-echo "  3. Add machine-specific shell config to ~/.zshrc.local"
+if [[ "$OS" == "Darwin" ]]; then
+  echo "  2. Reload Ghostty: Cmd+Shift+,"
+  echo "  3. Add machine-specific shell config to ~/.zshrc.local"
+else
+  echo "  2. Add machine-specific shell config to ~/.zshrc.local"
+fi

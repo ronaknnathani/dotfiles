@@ -19,6 +19,8 @@ brew "copilot-cli"
 brew "gh"
 brew "kubectx"
 
-cask "ghostty"
-cask "rectangle"
-cask "font-jetbrains-mono-nerd-font"
+if OS.mac?
+  cask "ghostty"
+  cask "rectangle"
+  cask "font-jetbrains-mono-nerd-font"
+end
