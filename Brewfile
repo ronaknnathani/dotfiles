@@ -27,9 +27,9 @@ if OS.mac?
 end
 
 if OS.linux?
-  # Linux distros default to bash; install zsh so we can chsh to it
+  # Linux distros default to bash; install zsh so we can exec into it
   brew "zsh"
-  # On macOS, these ship as casks; on Linux they're formulae
-  brew "claude-code"
-  brew "copilot-cli"
+  # On macOS, copilot-cli is a cask; on Linux the equivalent formula is just "copilot"
+  brew "copilot"
+  # claude-code has no Linux formula — install.sh runs the official installer instead
 end

@@ -121,6 +121,12 @@ fi
 
 # Linux-only extras
 if [[ "$OS" == "Linux" ]]; then
+  # Claude Code — no Linux formula, use the official installer
+  if ! command -v claude &>/dev/null; then
+    echo "Installing Claude Code..."
+    curl -fsSL https://claude.ai/install.sh | bash
+  fi
+
   if ! command -v ghostty &>/dev/null; then
     echo ""
     echo "NOTE: Ghostty must be installed separately on Linux."
