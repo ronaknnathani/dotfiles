@@ -27,6 +27,7 @@ if OS.mac?
 end
 
 if OS.linux?
-  # node provides npm, which is needed to install Copilot CLI on Linux
-  brew "node"
+  # On macOS, these ship as casks; on Linux they're formulae
+  brew "claude-code"
+  brew "copilot-cli"
 end
