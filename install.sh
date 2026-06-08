@@ -168,7 +168,7 @@ done
 echo "Linking dotfiles..."
 cd "$DOTFILES_DIR"
 for pkg in "${STOW_PACKAGES[@]}"; do
-  stow --adopt -t "$HOME" "$pkg"
+  stow --adopt --no-folding -t "$HOME" "$pkg"
   git checkout -- "$pkg"
 done
 
