@@ -19,7 +19,6 @@ brew "gh"
 brew "kubectx"
 
 if OS.mac?
-  cask "claude-code"
   cask "copilot-cli"
   cask "ghostty"
   cask "rectangle"
@@ -31,5 +30,4 @@ if OS.linux?
   brew "zsh"
   # On macOS, copilot-cli is a cask; on Linux the equivalent formula is just "copilot"
   brew "copilot"
-  # claude-code has no Linux formula — install.sh runs the official installer instead
 end
