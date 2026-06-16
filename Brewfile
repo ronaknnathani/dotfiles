@@ -17,6 +17,7 @@ brew "tmux"
 brew "jq"
 brew "gh"
 brew "kubectx"
+brew "hugo"
 
 if OS.mac?
   cask "copilot-cli"
