@@ -123,6 +123,7 @@ Personal guidelines for [Claude Code](https://claude.com/claude-code): how to th
 - [viddy](https://github.com/sachaos/viddy) -- modern `watch` replacement with diff highlighting (aliased as `watch`)
 - [direnv](https://direnv.net/) -- auto-loads `.envrc` when entering a directory
 - [ripgrep](https://github.com/BurntSushi/ripgrep) -- fast recursive grep
+- [Netlify CLI](https://docs.netlify.com/cli/get-started/) -- manage, build, and deploy Netlify sites from the terminal
 
 ## Stow packages
 

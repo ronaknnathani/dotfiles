@@ -18,6 +18,7 @@ brew "jq"
 brew "gh"
 brew "kubectx"
 brew "hugo"
+brew "netlify-cli"
 
 # GitHub Copilot CLI — distributed only as a cask (a single `copilot` binary), but
 # `brew install copilot-cli` installs it on both macOS and Linux. Not the `copilot`
