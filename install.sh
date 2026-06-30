@@ -9,7 +9,7 @@ esac
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
-STOW_PACKAGES=(zsh bash git ghostty oh-my-posh atuin helix yazi tmux claude)
+STOW_PACKAGES=(zsh bash git ghostty oh-my-posh atuin helix yazi tmux claude agents)
 
 # Homebrew
 if ! command -v brew &>/dev/null; then
