@@ -71,6 +71,28 @@ if command -v kubectl-krew &>/dev/null; then
   done
 fi
 
+# kind (Kubernetes in Docker) — pinned release downloaded to ~/.local/bin (already on PATH)
+if [[ -x "$HOME/.local/bin/kind" ]] || command -v kind &>/dev/null; then
+  echo "kind already installed"
+else
+  KIND_VERSION="v0.32.0"
+  case "$OS-$(uname -m)" in
+    Darwin-arm64)  KIND_ASSET="kind-darwin-arm64" ;;
+    Darwin-x86_64) KIND_ASSET="kind-darwin-amd64" ;;
+    Linux-aarch64) KIND_ASSET="kind-linux-arm64" ;;
+    Linux-x86_64)  KIND_ASSET="kind-linux-amd64" ;;
+    *) KIND_ASSET="" ;;
+  esac
+  if [[ -z "$KIND_ASSET" ]]; then
+    echo "  warn: no kind build for $OS-$(uname -m); skipping"
+  else
+    echo "Installing kind ${KIND_VERSION}..."
+    mkdir -p "$HOME/.local/bin"
+    curl -fsSL -o "$HOME/.local/bin/kind" "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/${KIND_ASSET}"
+    chmod +x "$HOME/.local/bin/kind"
+  fi
+fi
+
 # Go — install latest stable from go.dev (override any brew/system go via PATH)
 install_go() {
   local version="$1" goos goarch
