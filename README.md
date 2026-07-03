@@ -124,6 +124,7 @@ Personal guidelines for [Claude Code](https://claude.com/claude-code): how to th
 - [direnv](https://direnv.net/) -- auto-loads `.envrc` when entering a directory
 - [ripgrep](https://github.com/BurntSushi/ripgrep) -- fast recursive grep
 - [Netlify CLI](https://docs.netlify.com/cli/get-started/) -- manage, build, and deploy Netlify sites from the terminal
+- [Codex](https://chatgpt.com/codex) -- OpenAI coding agent CLI installed with the official non-interactive installer
 
 ## Stow packages
 

@@ -149,6 +149,14 @@ else
   curl -fsSL https://claude.ai/install.sh | bash
 fi
 
+# Codex — use the official non-interactive installer on both macOS and Linux
+if command -v codex &>/dev/null; then
+  echo "Codex already installed"
+else
+  echo "Installing Codex..."
+  curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh
+fi
+
 # Linux-only extras
 if [[ "$OS" == "Linux" ]]; then
   if ! command -v ghostty &>/dev/null; then
