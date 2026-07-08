@@ -112,6 +112,10 @@ Minimal [tmux](https://github.com/tmux/tmux) config focused on making the mouse 
 
 Personal guidelines for [Claude Code](https://claude.com/claude-code): how to think about tasks, when to ask vs. assume, simplicity and surgical-change rules, PR style, and worktree conventions. Read by Claude Code at the start of every session. Machine- or work-specific instructions stay outside this repo (e.g., `~/.claude/rules/`).
 
+### GitHub Copilot CLI (`~/.copilot/statusline-command.sh`)
+
+Custom status line command for GitHub Copilot CLI, themed with Catppuccin Mocha colors and showing the current directory, git branch, model/context details, usage, and Kubernetes context when available.
+
 ### Git
 
 - [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) as the pager for readable diffs
@@ -145,7 +149,8 @@ dotfiles/
 ├── tmux/.tmux.conf
 ├── yazi/.config/yazi/yazi.toml
 ├── yazi/.config/yazi/theme.toml
-└── claude/.claude/CLAUDE.md
+├── claude/.claude/CLAUDE.md
+└── copilot/.copilot/statusline-command.sh
 ```
 
 ## Machine-specific config

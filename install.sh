@@ -9,7 +9,7 @@ esac
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
-STOW_PACKAGES=(zsh bash git ghostty oh-my-posh atuin helix yazi tmux claude agents)
+STOW_PACKAGES=(zsh bash git ghostty oh-my-posh atuin helix yazi tmux claude copilot agents)
 
 # Homebrew
 if ! command -v brew &>/dev/null; then
@@ -201,6 +201,19 @@ for pkg in "${STOW_PACKAGES[@]}"; do
   stow --adopt --no-folding -t "$HOME" "$pkg"
   git checkout -- "$pkg"
 done
+
+# Configure the Copilot CLI status line without stowing generated user settings.
+echo "Configuring Copilot CLI status line..."
+mkdir -p "$HOME/.copilot"
+copilot_settings="$HOME/.copilot/settings.json"
+if [[ ! -f "$copilot_settings" ]]; then
+  printf '{}\n' > "$copilot_settings"
+fi
+copilot_settings_tmp="$(mktemp)"
+jq '.statusLine = {"type": "command", "command": "~/.copilot/statusline-command.sh"}' \
+  "$copilot_settings" > "$copilot_settings_tmp"
+mv "$copilot_settings_tmp" "$copilot_settings"
+chmod 600 "$copilot_settings"
 
 # Import shell history into atuin
 if command -v atuin &>/dev/null; then
