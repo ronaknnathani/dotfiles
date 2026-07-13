@@ -127,6 +127,8 @@ Custom status line command for GitHub Copilot CLI, themed with Catppuccin Mocha 
 - [viddy](https://github.com/sachaos/viddy) -- modern `watch` replacement with diff highlighting (aliased as `watch`)
 - [direnv](https://direnv.net/) -- auto-loads `.envrc` when entering a directory
 - [ripgrep](https://github.com/BurntSushi/ripgrep) -- fast recursive grep
+- [kubectl](https://kubernetes.io/docs/reference/kubectl/) -- Kubernetes CLI installed via Homebrew
+- [kubectx](https://github.com/ahmetb/kubectx) -- fast Kubernetes context and namespace switching
 - [Netlify CLI](https://docs.netlify.com/cli/get-started/) -- manage, build, and deploy Netlify sites from the terminal
 - [Codex](https://chatgpt.com/codex) -- OpenAI coding agent CLI installed with the official non-interactive installer
 
