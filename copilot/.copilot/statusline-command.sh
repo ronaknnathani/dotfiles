@@ -15,6 +15,7 @@ green='38;2;166;227;161'
 peach='38;2;250;179;135'
 yellow='38;2;249;226;175'
 red='38;2;243;139;168'
+gold='1;38;2;255;215;0'
 
 jq_value() {
   jq -er "$1 // empty" <<<"$input" 2>/dev/null || true
@@ -42,6 +43,16 @@ format_tokens() {
 
 cwd=$(jq_value '.workspace.current_dir // .cwd')
 [ -z "$cwd" ] && cwd="$PWD"
+
+# Session name in gold, with a short session-id fallback so the item is
+# never blank before the session has been named (auto-named or /rename).
+session_name=$(jq_value '.session_name')
+if [ -z "$session_name" ]; then
+  session_id=$(jq_value '.session_id')
+  [ -n "$session_id" ] && session_name="${session_id:0:8}"
+fi
+session_info=""
+[ -n "$session_name" ] && session_info="$(color "$gold" "$session_name")"
 
 kube_info=""
 if command -v kubectl >/dev/null 2>&1; then
@@ -108,3 +119,4 @@ printf '%s%s' "$path_info" "$git_info"
 [ -n "$model_info" ] && printf ' | %s' "$(color "$lavender" "$model_info")"
 [ -n "$usage_info" ] && printf ' | %s' "$usage_info"
 [ -n "$cost_info" ] && printf ' | %s' "$cost_info"
+[ -n "$session_info" ] && printf ' | %s' "$session_info"
