@@ -116,7 +116,7 @@ Personal guidelines for [Claude Code](https://claude.com/claude-code): how to th
 
 Custom status line command (`statusline-command.sh`), themed with Catppuccin Mocha colors and showing the current directory, git branch, model/context details, usage, session name, and Kubernetes context when available.
 
-A tracked base `settings.json` carries portable personal defaults (model, effort, status line, footer, theme). `install.sh` deep-merges it into the live `~/.copilot/settings.json` rather than symlinking it, so machine-specific or enterprise-managed keys already present locally (plugins, marketplaces, caches, trusted folders) are preserved. The base is excluded from stow via `copilot/.stow-local-ignore`.
+A tracked base `settings.json` carries portable personal defaults (model, effort, status line, footer, theme). It is merged into the live `~/.copilot/settings.json` rather than symlinked, so machine-specific or enterprise-managed keys already present locally (plugins, marketplaces, caches, trusted folders) are preserved. The apply step lives in `copilot/apply-settings.sh` and runs from `sync.sh` (and thus from `install.sh`, which calls `sync.sh --adopt`); the base is excluded from stow via `copilot/.stow-local-ignore`.
 
 To push personal setting changes back into the repo, run `copilot/capture-settings.sh`. It captures only an allowlist of leak-safe scalar prefs (`model`, `effortLevel`, `contextTier`, `colorMode`, `theme`) from the live file into the base, leaves hand-maintained base keys (status line path, footer, marketplaces) alone, and refuses to write if anything machine- or enterprise-specific slips through.
 
@@ -140,7 +140,8 @@ To push personal setting changes back into the repo, run `copilot/capture-settin
 
 ```
 dotfiles/
-├── install.sh              # macOS + Linux installer (auto-detects OS)
+├── install.sh              # macOS + Linux installer (auto-detects OS); calls sync.sh --adopt
+├── sync.sh                 # Re-stow all packages + apply non-stowed config (Copilot settings)
 ├── Brewfile                # Homebrew dependencies (casks guarded by OS.mac?)
 ├── zsh/.zshrc              # Shell config (zinit, plugins, fzf, aliases)
 ├── bash/.bashrc            # Minimal — execs into zsh on Linux (LDAP-friendly chsh workaround)
@@ -157,8 +158,12 @@ dotfiles/
 ├── yazi/.config/yazi/theme.toml
 ├── claude/.claude/CLAUDE.md
 ├── copilot/.copilot/statusline-command.sh
-└── copilot/.copilot/settings.json    # tracked base, merged (not stowed) into ~/.copilot/settings.json
+├── copilot/.copilot/settings.json    # tracked base, merged (not stowed) into ~/.copilot/settings.json
+├── copilot/apply-settings.sh         # base -> live merge (run by sync.sh); not stowed
+└── copilot/capture-settings.sh       # live -> base capture (allowlist, no leaks); not stowed
 ```
+
+Run `./sync.sh` after a `git pull` or after adding a package: it re-stows everything and re-applies the Copilot settings merge (which `install.sh` does via `sync.sh --adopt`).
 
 ## Machine-specific config
 

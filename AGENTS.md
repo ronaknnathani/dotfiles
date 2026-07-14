@@ -16,7 +16,7 @@ Each top-level directory is a Stow package that symlinks into `$HOME`:
 - `tmux/` - Minimal tmux config for mouse support over SSH (no plugins)
 - `yazi/` - Terminal file manager config (Catppuccin Mocha theme)
 - `claude/` - Claude Code personal guidelines (`~/.claude/CLAUDE.md`)
-- `copilot/` - GitHub Copilot CLI status line command (`~/.copilot/statusline-command.sh`) and a tracked base `settings.json` that `install.sh` merges into the live `~/.copilot/settings.json`
+- `copilot/` - GitHub Copilot CLI status line command (`~/.copilot/statusline-command.sh`), a tracked base `settings.json` merged into the live file by `apply-settings.sh` (run from `sync.sh`), and `capture-settings.sh` to push personal settings back to the base
 
 ## Key decisions
 
@@ -32,7 +32,7 @@ Each top-level directory is a Stow package that symlinks into `$HOME`:
 - The `.gitconfig` in the repo has a placeholder email -- users update it after install.
 - Single `install.sh` works on macOS and Linux: it `uname`-checks to branch where needed (brew shellenv path, Linux-only Ghostty/font extras, post-install message). GUI-app casks in the Brewfile are wrapped in `if OS.mac?` so the same Brewfile loads on both platforms; the exception is the `copilot-cli` cask (GitHub Copilot CLI, a single binary), which `brew install`s on both.
 - The portable `.zshrc` uses `$(brew --prefix)` for zinit path to support both macOS and Linux brew locations.
-- Copilot CLI `settings.json` must stay free of LinkedIn/enterprise metadata. The tracked `copilot/.copilot/settings.json` is a portable base (personal defaults only) that `install.sh` deep-merges (`jq -s '.[0] * .[1]'`, base wins on conflicts) into the live file; it is stow-ignored via `copilot/.stow-local-ignore` so `stow --adopt` can't pull machine/managed keys back into the repo. Enterprise-managed keys (plugins, marketplaces, company announcements) live only in the live `~/.copilot/settings.json`. To push personal changes back into the base, run `copilot/capture-settings.sh` — it captures only a leak-safe allowlist of scalar keys (`model`, `effortLevel`, `contextTier`, `colorMode`, `theme`), never paths/URLs/plugins/marketplaces, and refuses to write if a machine/enterprise value slips through.
+- Copilot CLI `settings.json` must stay free of LinkedIn/enterprise metadata. The tracked `copilot/.copilot/settings.json` is a portable base (personal defaults only), merged (`jq -s '.[0] * .[1]'`, base wins on conflicts) into the live file by `copilot/apply-settings.sh`; it is stow-ignored via `copilot/.stow-local-ignore` so `stow --adopt` can't pull machine/managed keys back into the repo. Enterprise-managed keys (plugins, marketplaces, company announcements) live only in the live `~/.copilot/settings.json`. The apply step is referenced in one place — `sync.sh` runs it, and `install.sh` runs the whole stow+apply via `sync.sh --adopt`. To push personal changes back into the base, run `copilot/capture-settings.sh` — it captures only a leak-safe allowlist of scalar keys (`model`, `effortLevel`, `contextTier`, `colorMode`, `theme`), never paths/URLs/plugins/marketplaces, and refuses to write if a machine/enterprise value slips through.
 
 ## Files not in this repo
 

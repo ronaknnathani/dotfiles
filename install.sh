@@ -202,30 +202,11 @@ for pkg in "${STOW_PACKAGES[@]}"; do
   done
 done
 
-# Stow packages
+# Stow packages (adopting any pre-existing files) and apply non-stowed config
+# (Copilot settings). Delegated to sync.sh so the stow/apply logic lives in one
+# place; --adopt makes the tracked versions win over existing dotfiles.
 echo "Linking dotfiles..."
-cd "$DOTFILES_DIR"
-for pkg in "${STOW_PACKAGES[@]}"; do
-  stow --adopt --no-folding -t "$HOME" "$pkg"
-  git checkout -- "$pkg"
-done
-
-# Merge the tracked Copilot base settings into the user's live settings.json,
-# without stowing it: the base provides curated personal defaults (model,
-# status line, footer, theme) while machine-specific/managed keys already in
-# the live file (enterprise plugins, marketplaces, caches, trusted folders)
-# are preserved. Tracked base values win on conflicts.
-echo "Configuring Copilot CLI settings..."
-mkdir -p "$HOME/.copilot"
-copilot_settings="$HOME/.copilot/settings.json"
-copilot_base="$DOTFILES_DIR/copilot/.copilot/settings.json"
-if [[ ! -f "$copilot_settings" ]]; then
-  printf '{}\n' > "$copilot_settings"
-fi
-copilot_settings_tmp="$(mktemp)"
-jq -s '.[0] * .[1]' "$copilot_settings" "$copilot_base" > "$copilot_settings_tmp"
-mv "$copilot_settings_tmp" "$copilot_settings"
-chmod 600 "$copilot_settings"
+"$DOTFILES_DIR/sync.sh" --adopt
 
 # Import shell history into atuin
 if command -v atuin &>/dev/null; then
