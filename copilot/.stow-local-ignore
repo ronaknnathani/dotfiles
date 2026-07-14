@@ -4,3 +4,5 @@
 # be symlinked/adopted, or `stow --adopt` would pull those local keys into the
 # repo.
 \.copilot/settings\.json
+# capture-settings.sh is a repo maintenance helper, not a stowed dotfile.
+capture-settings\.sh

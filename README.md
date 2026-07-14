@@ -118,6 +118,8 @@ Custom status line command (`statusline-command.sh`), themed with Catppuccin Moc
 
 A tracked base `settings.json` carries portable personal defaults (model, effort, status line, footer, theme). `install.sh` deep-merges it into the live `~/.copilot/settings.json` rather than symlinking it, so machine-specific or enterprise-managed keys already present locally (plugins, marketplaces, caches, trusted folders) are preserved. The base is excluded from stow via `copilot/.stow-local-ignore`.
 
+To push personal setting changes back into the repo, run `copilot/capture-settings.sh`. It captures only an allowlist of leak-safe scalar prefs (`model`, `effortLevel`, `contextTier`, `colorMode`, `theme`) from the live file into the base, leaves hand-maintained base keys (status line path, footer, marketplaces) alone, and refuses to write if anything machine- or enterprise-specific slips through.
+
 ### Git
 
 - [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) as the pager for readable diffs
