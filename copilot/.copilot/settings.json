@@ -1,0 +1,26 @@
+{
+  "model": "claude-opus-4.8",
+  "effortLevel": "high",
+  "contextTier": "long_context",
+  "colorMode": "github",
+  "theme": "github",
+  "allowedUrls": [
+    "https://docs.google.com"
+  ],
+  "disabledSkills": [],
+  "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.copilot/statusline-command.sh"
+  },
+  "footer": {
+    "showCustom": true
+  }
+}

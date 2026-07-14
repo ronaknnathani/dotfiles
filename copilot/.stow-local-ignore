@@ -1,0 +1,6 @@
+# settings.json is a tracked *base* that install.sh merges into the live
+# ~/.copilot/settings.json (preserving machine-specific/managed keys such as
+# enterprise plugins, marketplaces, caches, and trusted folders). It must not
+# be symlinked/adopted, or `stow --adopt` would pull those local keys into the
+# repo.
+\.copilot/settings\.json

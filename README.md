@@ -112,9 +112,11 @@ Minimal [tmux](https://github.com/tmux/tmux) config focused on making the mouse 
 
 Personal guidelines for [Claude Code](https://claude.com/claude-code): how to think about tasks, when to ask vs. assume, simplicity and surgical-change rules, PR style, and worktree conventions. Read by Claude Code at the start of every session. Machine- or work-specific instructions stay outside this repo (e.g., `~/.claude/rules/`).
 
-### GitHub Copilot CLI (`~/.copilot/statusline-command.sh`)
+### GitHub Copilot CLI (`~/.copilot/`)
 
-Custom status line command for GitHub Copilot CLI, themed with Catppuccin Mocha colors and showing the current directory, git branch, model/context details, usage, and Kubernetes context when available.
+Custom status line command (`statusline-command.sh`), themed with Catppuccin Mocha colors and showing the current directory, git branch, model/context details, usage, session name, and Kubernetes context when available.
+
+A tracked base `settings.json` carries portable personal defaults (model, effort, status line, footer, theme). `install.sh` deep-merges it into the live `~/.copilot/settings.json` rather than symlinking it, so machine-specific or enterprise-managed keys already present locally (plugins, marketplaces, caches, trusted folders) are preserved. The base is excluded from stow via `copilot/.stow-local-ignore`.
 
 ### Git
 
@@ -152,7 +154,8 @@ dotfiles/
 ├── yazi/.config/yazi/yazi.toml
 ├── yazi/.config/yazi/theme.toml
 ├── claude/.claude/CLAUDE.md
-└── copilot/.copilot/statusline-command.sh
+├── copilot/.copilot/statusline-command.sh
+└── copilot/.copilot/settings.json    # tracked base, merged (not stowed) into ~/.copilot/settings.json
 ```
 
 ## Machine-specific config

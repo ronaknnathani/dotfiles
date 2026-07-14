@@ -210,16 +210,20 @@ for pkg in "${STOW_PACKAGES[@]}"; do
   git checkout -- "$pkg"
 done
 
-# Configure the Copilot CLI status line without stowing generated user settings.
-echo "Configuring Copilot CLI status line..."
+# Merge the tracked Copilot base settings into the user's live settings.json,
+# without stowing it: the base provides curated personal defaults (model,
+# status line, footer, theme) while machine-specific/managed keys already in
+# the live file (enterprise plugins, marketplaces, caches, trusted folders)
+# are preserved. Tracked base values win on conflicts.
+echo "Configuring Copilot CLI settings..."
 mkdir -p "$HOME/.copilot"
 copilot_settings="$HOME/.copilot/settings.json"
+copilot_base="$DOTFILES_DIR/copilot/.copilot/settings.json"
 if [[ ! -f "$copilot_settings" ]]; then
   printf '{}\n' > "$copilot_settings"
 fi
 copilot_settings_tmp="$(mktemp)"
-jq '.statusLine = {"type": "command", "command": "~/.copilot/statusline-command.sh"}' \
-  "$copilot_settings" > "$copilot_settings_tmp"
+jq -s '.[0] * .[1]' "$copilot_settings" "$copilot_base" > "$copilot_settings_tmp"
 mv "$copilot_settings_tmp" "$copilot_settings"
 chmod 600 "$copilot_settings"
 

@@ -16,7 +16,7 @@ Each top-level directory is a Stow package that symlinks into `$HOME`:
 - `tmux/` - Minimal tmux config for mouse support over SSH (no plugins)
 - `yazi/` - Terminal file manager config (Catppuccin Mocha theme)
 - `claude/` - Claude Code personal guidelines (`~/.claude/CLAUDE.md`)
-- `copilot/` - GitHub Copilot CLI status line command (`~/.copilot/statusline-command.sh`)
+- `copilot/` - GitHub Copilot CLI status line command (`~/.copilot/statusline-command.sh`) and a tracked base `settings.json` that `install.sh` merges into the live `~/.copilot/settings.json`
 
 ## Key decisions
 
@@ -32,6 +32,7 @@ Each top-level directory is a Stow package that symlinks into `$HOME`:
 - The `.gitconfig` in the repo has a placeholder email -- users update it after install.
 - Single `install.sh` works on macOS and Linux: it `uname`-checks to branch where needed (brew shellenv path, Linux-only Ghostty/font extras, post-install message). GUI-app casks in the Brewfile are wrapped in `if OS.mac?` so the same Brewfile loads on both platforms; the exception is the `copilot-cli` cask (GitHub Copilot CLI, a single binary), which `brew install`s on both.
 - The portable `.zshrc` uses `$(brew --prefix)` for zinit path to support both macOS and Linux brew locations.
+- Copilot CLI `settings.json` must stay free of LinkedIn/enterprise metadata. The tracked `copilot/.copilot/settings.json` is a portable base (personal defaults only) that `install.sh` deep-merges (`jq -s '.[0] * .[1]'`, base wins on conflicts) into the live file; it is stow-ignored via `copilot/.stow-local-ignore` so `stow --adopt` can't pull machine/managed keys back into the repo. Enterprise-managed keys (plugins, marketplaces, company announcements) live only in the live `~/.copilot/settings.json`.
 
 ## Files not in this repo
 
