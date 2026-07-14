@@ -31,6 +31,14 @@ if ! command -v stow &>/dev/null; then
   brew install stow
 fi
 
+# GitHub Copilot CLI — use the official installer on both macOS and Linux
+if command -v copilot &>/dev/null; then
+  echo "GitHub Copilot CLI already installed"
+else
+  echo "Installing GitHub Copilot CLI..."
+  curl -fsSL https://gh.io/copilot-install | bash
+fi
+
 # gh-dash extension (skip if already installed)
 if command -v gh &>/dev/null && ! gh extension list 2>/dev/null | grep -q "dlvhdr/gh-dash"; then
   echo "Installing gh-dash extension..."
