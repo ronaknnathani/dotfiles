@@ -15,3 +15,15 @@ shell-integration-features = ssh-env,ssh-terminfo
 keybind = super+arrow_left=previous_tab
 keybind = super+arrow_right=next_tab
 
+# Quick terminal
+quick-terminal-position = top
+quick-terminal-size = 45%
+quick-terminal-screen = mouse
+quick-terminal-autohide = true
+quick-terminal-space-behavior = move
+quick-terminal-animation-duration = 0.15
+
+# Keybindings
+# global: makes the trigger work system-wide, not just when Ghostty is focused.
+# Requires Accessibility permission for Ghostty.
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
