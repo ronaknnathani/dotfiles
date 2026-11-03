@@ -15,7 +15,7 @@ Each top-level directory is a Stow package that symlinks into `$HOME`:
 - `helix/` - Editor config
 - `tmux/` - Minimal tmux config for mouse support over SSH (no plugins)
 - `yazi/` - Terminal file manager config (Catppuccin Mocha theme)
-- `claude/` - Claude Code personal guidelines (`~/.claude/CLAUDE.md`)
+- `claude/` - Claude Code personal guidelines (`~/.claude/CLAUDE.md`), status line script, and a tracked base `settings.json` merged into the live file by `apply-settings.sh` (run from `sync.sh`)
 - `copilot/` - GitHub Copilot CLI status line command (`~/.copilot/statusline-command.sh`), a tracked base `settings.json` merged into the live file by `apply-settings.sh` (run from `sync.sh`), and `capture-settings.sh` to push personal settings back to the base
 
 ## Key decisions

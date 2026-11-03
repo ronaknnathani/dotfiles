@@ -29,7 +29,8 @@ for pkg in */; do
   fi
 done
 
-# Apply non-stowed Copilot settings (merged into the live ~/.copilot/settings.json).
+# Apply non-stowed Claude and Copilot settings (merged into the live settings.json files).
+"$DOTFILES_DIR/claude/apply-settings.sh"
 "$DOTFILES_DIR/copilot/apply-settings.sh"
 
 echo "Done."

@@ -1,0 +1,7 @@
+# settings.json is a tracked *base* that sync.sh merges into the live
+# ~/.claude/settings.json (preserving machine-specific keys such as hooks and
+# marketplaces). It must not be symlinked/adopted, or `stow --adopt` would pull
+# those local keys into the repo.
+\.claude/settings\.json
+# apply-settings.sh is a repo maintenance helper, not a stowed dotfile.
+.*-settings\.sh
